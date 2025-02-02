@@ -150,7 +150,13 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-100 via-pink-50/70 to-white text-[#222222] overflow-hidden">
+    <div className="min-h-screen bg-[#FFD1DC] overflow-hidden relative">
+      <div className="absolute inset-0">
+        <div className="absolute w-64 h-64 bg-[#FFB6C1] rounded-full -top-20 -left-20 blur-3xl opacity-50"></div>
+        <div className="absolute w-64 h-64 bg-[#87CEEB] rounded-full top-40 -right-20 blur-3xl opacity-50"></div>
+        <div className="absolute w-64 h-64 bg-[#98FB98] rounded-full bottom-20 left-40 blur-3xl opacity-50"></div>
+      </div>
+
       <AnimatePresence>
         {showSparkles && (
           <motion.div
@@ -189,7 +195,7 @@ function App() {
                     delay: i * 0.2,
                     ease: "easeInOut"
                   }}
-                  className="text-[#FF385C]"
+                  className="text-[#FF1493]"
                 >
                   <Sparkles size={24} />
                 </motion.div>
@@ -199,17 +205,17 @@ function App() {
         )}
       </AnimatePresence>
       
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-12 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-4xl mx-auto"
+          className="max-w-3xl mx-auto"
         >
           <motion.div 
-            className="w-16 h-16 mx-auto mb-6"
+            className="w-24 h-24 mx-auto mb-8"
             animate={{ 
-              y: [0, -10, 0],
-              rotate: [0, -5, 5, -5, 0]
+              rotate: [0, -10, 10, -10, 0],
+              y: [0, -5, 5, -5, 0]
             }}
             transition={{ 
               duration: 2,
@@ -217,7 +223,7 @@ function App() {
               ease: "easeInOut"
             }}
           >
-            <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-pink-400">
+            <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[#FF69B4]">
               <path d="M50,15c-19.33,0-35,15.67-35,35s15.67,35,35,35s35-15.67,35-35S69.33,15,50,15z M36,45 c1.66,0,3,1.34,3,3s-1.34,3-3,3s-3-1.34-3-3S34.34,45,36,45z M64,45c1.66,0,3,1.34,3,3s-1.34,3-3,3s-3-1.34-3-3S62.34,45,64,45z M50,70 c-8.27,0-15-6.73-15-15h30C65,63.27,58.27,70,50,70z"/>
               <motion.g
                 animate={{
@@ -236,12 +242,12 @@ function App() {
             </svg>
           </motion.div>
 
-          <h1 className="text-5xl font-bold text-center mb-2">
-            <span className="gradient-text">Random Match</span>
+          <h1 className="text-6xl font-black text-center mb-4 text-[#FF1493]" style={{ textShadow: '3px 3px 0px #FFB6C1' }}>
+            Random Match
           </h1>
-          <p className="text-center text-gray-500 mb-12">두근두근 궁합 매칭</p>
+          <p className="text-center text-[#FF69B4] mb-12 text-xl font-medium">두근두근 궁합 매칭</p>
 
-          <div className="bg-white p-8 rounded-2xl shadow-lg mb-12">
+          <div className="bg-white/80 backdrop-blur-md p-8 rounded-[2rem] shadow-[0_20px_50px_rgba(255,105,180,0.3)] border-4 border-[#FFB6C1] mb-12">
             <div className="flex gap-3 mb-8">
               <input
                 type="text"
@@ -249,44 +255,44 @@ function App() {
                 onChange={(e) => setNewName(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="이름을 입력하세요"
-                className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF385C] text-gray-700 placeholder-gray-400"
+                className="flex-1 px-6 py-4 rounded-2xl bg-white border-2 border-[#FFB6C1] outline-none text-[#FF69B4] placeholder-[#FFB6C1] focus:border-[#FF1493] transition-all text-lg"
               />
               <button
                 onClick={addPerson}
-                className="btn"
+                className="p-4 rounded-2xl bg-[#FF69B4] hover:bg-[#FF1493] transition-all duration-200 shadow-lg hover:shadow-[0_10px_20px_rgba(255,105,180,0.3)] transform hover:-translate-y-1"
               >
-                <UserPlus size={20} className="mr-2" />
-                추가하기
+                <UserPlus className="w-6 h-6 text-white" />
               </button>
             </div>
 
             <div className="flex flex-wrap gap-2 mb-8">
               {people.map(person => (
-                <div
+                <motion.div
                   key={person.id}
-                  className="px-4 py-2 bg-gray-50 rounded-full flex items-center gap-2 border border-gray-200"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                  className="px-4 py-2 bg-white rounded-full flex items-center gap-2 border-2 border-[#FFB6C1] shadow-lg"
                 >
-                  <span className="text-gray-700">{person.name}</span>
+                  <span className="text-[#FF69B4] font-medium">{person.name}</span>
                   <button
                     onClick={() => removePerson(person.id)}
-                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                    className="text-[#FFB6C1] hover:text-[#FF1493] transition-colors"
                   >
                     <X size={16} />
                   </button>
-                </div>
+                </motion.div>
               ))}
             </div>
 
             <button
               onClick={createRandomMatches}
               disabled={people.length < 2}
-              className={`btn w-full py-4 text-lg font-medium ${
-                people.length < 2
-                ? 'opacity-50 cursor-not-allowed'
-                : ''
-              }`}
+              className={`w-full py-4 text-lg font-bold rounded-2xl bg-gradient-to-r from-[#FF69B4] to-[#FF1493] text-white shadow-lg 
+                hover:shadow-[0_10px_20px_rgba(255,105,180,0.3)] transform hover:-translate-y-1 transition-all duration-200
+                ${people.length < 2 ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              <Shuffle className="mr-2" />
+              <Shuffle className="mr-2 inline-block" />
               매칭 시작하기
             </button>
           </div>
@@ -318,19 +324,31 @@ function App() {
                     >
                       {/* Front of card */}
                       <div
-                        className={`card absolute inset-0 w-full h-full ${
-                          flippedCards.has(index) ? 'opacity-0' : 'opacity-100'
-                        }`}
+                        className={`absolute inset-0 w-full h-full bg-white/90 backdrop-blur-md p-8 rounded-[2rem] 
+                          shadow-[0_20px_50px_rgba(255,105,180,0.2)] border-4 border-[#FFB6C1]
+                          ${flippedCards.has(index) ? 'opacity-0' : 'opacity-100'}`}
                         style={{ backfaceVisibility: "hidden" }}
                       >
                         <div className="flex items-center justify-center gap-4 p-6 h-full">
                           {match.isSolo ? (
-                            <div className="text-2xl font-medium">{match.person1.name}</div>
+                            <div className="text-2xl font-bold text-[#FF69B4]">{match.person1.name}</div>
                           ) : (
                             <div className="flex items-center justify-center gap-4">
-                              <div className="text-2xl font-medium">{match.person1.name}</div>
-                              <span className="gradient-text text-3xl">♥</span>
-                              <div className="text-2xl font-medium">{match.person2?.name}</div>
+                              <div className="text-2xl font-bold text-[#FF69B4]">{match.person1.name}</div>
+                              <motion.div
+                                animate={{ 
+                                  scale: [1, 1.2, 1],
+                                  rotate: [0, 10, -10, 0]
+                                }}
+                                transition={{
+                                  duration: 1.5,
+                                  repeat: Infinity,
+                                  ease: "easeInOut"
+                                }}
+                              >
+                                <Heart className="w-8 h-8 text-[#FF1493]" />
+                              </motion.div>
+                              <div className="text-2xl font-bold text-[#FF69B4]">{match.person2?.name}</div>
                             </div>
                           )}
                         </div>
@@ -338,9 +356,9 @@ function App() {
 
                       {/* Back of card */}
                       <div
-                        className={`card absolute inset-0 w-full h-full ${
-                          !flippedCards.has(index) ? 'opacity-0' : 'opacity-100'
-                        }`}
+                        className={`absolute inset-0 w-full h-full bg-white/90 backdrop-blur-md p-8 rounded-[2rem] 
+                          shadow-[0_20px_50px_rgba(255,105,180,0.2)] border-4 border-[#FFB6C1]
+                          ${!flippedCards.has(index) ? 'opacity-0' : 'opacity-100'}`}
                         style={{ 
                           backfaceVisibility: "hidden",
                           transform: "rotateX(180deg)"
@@ -348,17 +366,17 @@ function App() {
                       >
                         {match.isSolo ? (
                           <div className="flex flex-col items-center justify-center p-6 h-full gap-4">
-                            <span className="text-xl text-center">
+                            <span className="text-xl text-center font-bold text-[#FF69B4]">
                               {match.person1.name}는(은) 오늘 솔로입니다
                             </span>
-                            <span className="text-gray-500">다음 매칭을 기다려주세요!</span>
+                            <span className="text-[#FF69B4]/70">다음 매칭을 기다려주세요!</span>
                           </div>
                         ) : (
                           <div className="flex flex-col items-center justify-center p-6 h-full gap-4">
-                            <div className="text-4xl font-bold gradient-text">
+                            <div className="text-5xl font-black" style={{ color: '#FF1493', textShadow: '2px 2px 0px #FFB6C1' }}>
                               {match.score}%
                             </div>
-                            <p className="text-center text-gray-600">
+                            <p className="text-center text-[#FF69B4] text-lg">
                               {match.reason}
                             </p>
                           </div>
@@ -372,6 +390,19 @@ function App() {
           </AnimatePresence>
         </motion.div>
       </div>
+
+      <ReactCanvasConfetti
+        ref={getInstance}
+        style={{
+          position: 'fixed',
+          pointerEvents: 'none',
+          width: '100%',
+          height: '100%',
+          top: 0,
+          left: 0,
+          zIndex: 50
+        }}
+      />
 
       <style>{`
         .perspective-1000 {
@@ -390,19 +421,17 @@ function App() {
         .card {
           transform-style: preserve-3d;
           transition: transform 0.6s;
-          background: white;
-          border-radius: 12px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-          backdrop-filter: blur(8px);
         }
         :root {
           background: linear-gradient(180deg, #FFE4E9 0%, #FFF5F7 50%, #FFFFFF 100%);
         }
-        .gradient-text {
-          background: linear-gradient(90deg, #FF385C 0%, #E31C5F 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          font-family: 'Cedarville Cursive', cursive;
+        @keyframes floating {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0px); }
+        }
+        .floating {
+          animation: floating 3s ease-in-out infinite;
         }
       `}</style>
     </div>
